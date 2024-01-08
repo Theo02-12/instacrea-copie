@@ -13,7 +13,7 @@ interface Props {
   src?: string;
 }
 
-const GuestLayout = async ({ children, src }: Props) => {
+const GuestLayout: React.FC<Props> = async ({ children, src }: Props) => {
   const session = await auth();
   if (session) return redirect('/');
   return (
