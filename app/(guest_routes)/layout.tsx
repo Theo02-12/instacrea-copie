@@ -10,11 +10,10 @@ import ButtonBackToTop from '../components/ButtonBackToTop';
 
 interface Props {
   children: ReactNode;
-  cartItems: number;
   src: string;
 }
 
-export default async function GuestLayout({ children, src }: Props) {
+export const GuestLayout = async ({ children, src }: Props) => {
   const session = await auth();
   if (session) return redirect('/');
   return (
