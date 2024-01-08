@@ -1,0 +1,56 @@
+/* eslint-disable jsx-a11y/alt-text */
+"use client";
+import React, { ChangeEventHandler } from "react";
+import { TrashIcon, Image } from "lucide-react";
+
+import ImageInput from "@components/ui/ImageInput";
+import SelectedImageThumb from "@components/ui/SelectedImageThumb";
+
+interface Props {
+  id: string;
+  images?: string[];
+  multiple?: boolean;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
+  onRemove?(index: number): void;
+}
+
+export default function ImageSelector({
+  id,
+  images,
+  onChange,
+  onRemove,
+  multiple,
+}: Props) {
+  const icon = multiple ? (
+    <div className="relative">
+      <Image className="w-8 h-8 bg-white" />
+      <Image className="w-8 h-8 absolute -top-2 -right-2 -z-10" />
+    </div>
+  ) : (
+    <Image className="w-8 h-8" />
+  );
+
+  return (
+    <div className="flex items-center space-x-4">
+      {images?.map((img, index) => {
+        return (
+          <div key={index} className="relative">
+            <SelectedImageThumb src={img} />
+            {multiple ? (
+              <div
+                onClick={() => onRemove && onRemove(index)}
+                className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-white rounded cursor-pointer"
+              >
+                <TrashIcon className="w-4 h-4" />
+              </div>
+            ) : null}
+          </div>
+        );
+      })}
+
+      <ImageInput id={id} onChange={onChange} multiple={multiple}>
+        {icon}
+      </ImageInput>
+    </div>
+  );
+}
