@@ -9,17 +9,17 @@ import FirstFooter from '../components/FirstFooter';
 import ButtonBackToTop from '../components/ButtonBackToTop';
 
 interface Props {
-  children: ReactNode;
-  src: string;
+  children?: ReactNode;
+  src?: string;
 }
 
-const GuestLayout: React.FC<Props> = async ({ children, src }) => {
+export default async function GuestLayout ({ children, src }: Props){
   const session = await auth();
   if (session) return redirect('/');
   return (
     <div>
       <HeaderBand />
-      <NavUI cartItems={0} src={src} />
+      <NavUI cartItems={0} src={src!} />
       <MobileNavBar />
       {children}
       <FirstFooter />
@@ -28,5 +28,3 @@ const GuestLayout: React.FC<Props> = async ({ children, src }) => {
     </div>
   );
 }
-
-export default GuestLayout
